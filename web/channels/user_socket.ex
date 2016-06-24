@@ -3,7 +3,7 @@ defmodule PhoenixJsGame.UserSocket do
 
   ## Channels
   # channel "rooms:*", PhoenixJsGame.RoomChannel
-
+  channel "games:lobby", PhoenixJsGame.LobbyChannel
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
   # transport :longpoll, Phoenix.Transports.LongPoll
