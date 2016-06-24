@@ -78,7 +78,7 @@ export class Play extends Phaser.State {
 
   sendPosition(game_id, channel) {
     console.log("Sending message", game_id)
-    channel.push("shout", {"game_id": game_id, "pos_y": this.bird.y, "pos_x": this.bird.x})
+    channel.push("position", {"game_id": game_id, "pos_y": this.bird.y, "pos_x": this.bird.x})
   }
 
   serializePosition({x, y}) {
