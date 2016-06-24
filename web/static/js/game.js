@@ -1,6 +1,5 @@
 import {joinChannel} from "./common/channels"
 import {Play} from "./states/play"
-import {joinChannel} from './common/channels'
 
 export class Game extends Phaser.Game {
   constructor(width, height, container) {

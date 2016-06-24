@@ -1,5 +1,4 @@
 import {Socket} from 'phoenix'
-import {syncPosition} from '../common/sync'
 
 export class Play extends Phaser.State {
   init(...options) {
@@ -8,7 +7,7 @@ export class Play extends Phaser.State {
     console.log(channel)
     this.game_id = Math.random()
   }
-  
+
   preload() {
     this.load.image('bird', 'images/bird.png');
     this.load.image('pipe', 'images/pipe.png');
