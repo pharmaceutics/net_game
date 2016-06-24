@@ -1,4 +1,10 @@
 export class Play extends Phaser.State {
+  init(...options) {
+    const [channel] = options
+    this.channel = channel
+    this.game_id = Math.random()
+  }
+
   preload() {
     this.load.image('bird', 'images/bird.png');
     this.load.image('pipe', 'images/pipe.png');
@@ -24,9 +30,13 @@ export class Play extends Phaser.State {
   }
 
   update() {
-    if (this.bird.y < 0 || this.bird.y > 490) {
+    console.log("dupa")
+    if (this.bird.y < 0 || this.bird.y > window.innerHeight) {
         this.restartGame();
     }
+
+    this.syncPosition(this.game_id, this.channel)
+
   }
 
   jump() {
@@ -34,7 +44,7 @@ export class Play extends Phaser.State {
   }
 
   restartGame() {
-      this.game.state.start('play');
+      this.game.state.start('play', true, false, this.channel);
   }
 
   addOnePipe(x, y) {
@@ -51,10 +61,33 @@ export class Play extends Phaser.State {
   }
 
   addRowOfPipes() {
+    var box_count = window.innerHeight / 60
+
     var hole = Math.floor(Math.random() * 5) + 1;
 
-    for (var i = 0; i < 8; i++)
+    for (var i = 0; i < box_count; i++)
         if (i != hole && i != hole + 1)
             this.addOnePipe(window.innerWidth, i * 60 + 10);
+  }
+
+  syncPosition(game_id, channel) {
+    this.sendPosition(game_id, channel)
+    //this.receivePosition(game_id, channel)
+  }
+
+  sendPosition(game_id, channel) {
+    //const message = serializePosition(this.bird)
+    console.log("Sending message", game_id)
+    channel.push("shout", {game_id})
+  }
+
+  serializePosition({x, y}) {
+    Object.assign({x, y})
+  }
+
+  receivePosition(game_id, channel) {
+    channel.on("position", function(message) {
+      console.log("Received message", message)
+    })
   }
 }
