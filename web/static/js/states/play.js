@@ -1,10 +1,14 @@
+import {Socket} from 'phoenix'
+import {syncPosition} from '../common/sync'
+
 export class Play extends Phaser.State {
   init(...options) {
     const [channel] = options
     this.channel = channel
+    console.log(channel)
     this.game_id = Math.random()
   }
-
+  
   preload() {
     this.load.image('bird', 'images/bird.png');
     this.load.image('pipe', 'images/pipe.png');
@@ -27,6 +31,7 @@ export class Play extends Phaser.State {
     this.pipes = this.game.add.group();
 
     this.timer = this.game.time.events.loop(1500, this.addRowOfPipes, this);
+    // syncPosition(this.bird, this.channel, this.jump)
   }
 
   update() {
