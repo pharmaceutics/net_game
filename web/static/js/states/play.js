@@ -27,10 +27,11 @@ export class Play extends Phaser.State {
     this.pipes = this.game.add.group();
 
     this.timer = this.game.time.events.loop(1500, this.addRowOfPipes, this);
+
+
   }
 
   update() {
-    console.log("dupa")
     if (this.bird.y < 0 || this.bird.y > window.innerHeight) {
         this.restartGame();
     }
@@ -72,13 +73,12 @@ export class Play extends Phaser.State {
 
   syncPosition(game_id, channel) {
     this.sendPosition(game_id, channel)
-    //this.receivePosition(game_id, channel)
+    this.receivePosition(game_id, channel)
   }
 
   sendPosition(game_id, channel) {
-    //const message = serializePosition(this.bird)
     console.log("Sending message", game_id)
-    channel.push("shout", {game_id})
+    channel.push("shout", {"game_id": game_id, "pos_y": this.bird.y, "pos_x": this.bird.x})
   }
 
   serializePosition({x, y}) {
