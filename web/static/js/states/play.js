@@ -1,7 +1,10 @@
+import {Socket} from 'phoenix'
+
 export class Play extends Phaser.State {
   init(...options) {
     const [channel] = options
     this.channel = channel
+    console.log(channel)
     this.game_id = Math.random()
   }
 
@@ -27,8 +30,6 @@ export class Play extends Phaser.State {
     this.pipes = this.game.add.group();
 
     this.timer = this.game.time.events.loop(1500, this.addRowOfPipes, this);
-
-
   }
 
   update() {
